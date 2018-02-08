@@ -23,6 +23,7 @@ import android.widget.TextView;
 public class MainActivity extends Activity 
 {
 	public static final String CR = "\n";
+	public static final String RAZDELITEL = "==========";
 	public static MainActivity inst = null;
 //	RadioButton rb1=null;
 //	RadioButton rb2=null;
@@ -216,7 +217,7 @@ public class MainActivity extends Activity
     	FileWriter wr;
     	try{
     		wr= new FileWriter(ff, true);
-    		txt=inst.getCurrentDate()+CR+txt+CR+CR;
+    		txt=inst.getCurrentDate()+CR+RAZDELITEL+CR+txt+CR+RAZDELITEL+CR+CR;
 			 	wr.append(txt);
 			 	wr.flush();
 			 	wr.close();

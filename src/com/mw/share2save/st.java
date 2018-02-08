@@ -1,5 +1,7 @@
 package com.mw.share2save;
 
+import java.io.IOException;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
@@ -77,6 +79,8 @@ public class st
    	}
     public static void showKbd(final EditText et)
     {
+    	if (et==null)
+    		return;
        (new Handler()).postDelayed(new Runnable() {
 
 			public void run() {
@@ -84,15 +88,16 @@ public class st
                 et.requestFocus();
                 et.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN , 0, 0, 0));
                 et.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP , 0, 0, 0));                       
-                if (et !=null)
-                	et.setSelection(et.getText().toString().length());
+               	et.setSelection(et.getText().toString().length());
             }
         }, 200);
     }
     public static void hideKbd(Activity con)
     {
+    	try {
 			InputMethodManager imm = (InputMethodManager) con.getSystemService(con.INPUT_METHOD_SERVICE);
 			imm.hideSoftInputFromWindow(con.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+       	}catch(Throwable e) {}
     }
 
 }
