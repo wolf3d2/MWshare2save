@@ -1,21 +1,16 @@
 package com.mw.share2save;
 
-import java.io.IOException;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class st 
+public class st extends Set
 {
-	// другие приложения в маркете
-		public static final String ALL_APP_INMARKET = "https://play.google.com/store/apps/developer?id=Михаил+Вязенкин";
 	//--------------------------------------------------------------------------
     /** Универсальный обсервер. Содержит 2 параметра m_param1 и m_param2, которые вызываются и меняются в зависимости от контекста*/
     public static abstract class UniObserver

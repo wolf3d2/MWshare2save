@@ -1,6 +1,7 @@
 package com.mw.share2save;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ClipData;
@@ -10,7 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
-import android.support.v4.app.NotificationCompat;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 
@@ -30,12 +30,24 @@ public class Notif
 	{
 		ClipboardManager cl= (ClipboardManager) mact.getSystemService(mact.CLIPBOARD_SERVICE);
 		ClipData clip = cl.getPrimaryClip();
-		String str = clip.getItemAt(0).getText().toString();
-        Intent in = new Intent(Intent.ACTION_VIEW)
-        .setComponent(new ComponentName(mact, MainActivity.class))
-        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        .putExtra(Intent.EXTRA_TEXT, str)
-        .setType("text/plain");
+		String str = st.STR_NULL;
+		if (clip != null)
+			str = clip.getItemAt(0).getText().toString();
+//        Intent in = new Intent(Intent.ACTION_SEND)
+//        .setAction(Intent.ACTION_SEND)
+//        .setComponent(new ComponentName(mact, MainActivity.class))
+//        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//        .putExtra(Intent.EXTRA_TEXT, str)
+//        .setType("text/plain");
+		
+        Intent in = new Intent();
+        in.setAction(Intent.ACTION_SEND);
+        in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        in.putExtra(Intent.EXTRA_TEXT, str);
+        in.setType("text/plain");
+        in.setComponent(new ComponentName(mact, MainActivity.class));
+        in.setClipData(clip);
+
         //mact.startActivity(in);
 //        Intent sendIntent = new Intent();
 //        sendIntent.setAction(Intent.ACTION_SEND);
@@ -55,19 +67,20 @@ public class Notif
         Resources res = mact.getResources();
 		
         // до версии Android 8.0 API 26
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(mact);
+        Notification.Builder builder = new Notification.Builder(mact);
 
         builder.setContentIntent(contentIntent)
                 // обязательные настройки
                 .setSmallIcon(R.drawable.ic_launcher)
                 //.setContentTitle(res.getString(R.string.notifytitle)) // Заголовок уведомления
-                .setContentTitle("Напоминание")
+                .setContentTitle(res.getString(R.string.app_name))
                 //.setContentText(res.getString(R.string.notifytext))
-                .setContentText("Пора покормить кота") // Текст уведомления
+                .setContentText(res.getString(R.string.add_sel)) // Текст уведомления
                 // необязательные настройки
-                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_launcher)) // большая
-                // картинка
-                //.setTicker(res.getString(R.string.warning)) // текст в строке состояния
+             // большая картинка
+                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_launcher))
+             // текст в строке состояния
+                //.setTicker(res.getString(R.string.warning)) 
                 .setTicker("Последнее китайское предупреждение!")
                 .setWhen(System.currentTimeMillis())
                 .addAction(R.drawable.ic_launcher, "Сохранить",

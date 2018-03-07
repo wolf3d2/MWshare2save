@@ -25,13 +25,13 @@ public class MainActivity extends Activity
 	public static final String CR = "\n";
 	public static final String RAZDELITEL = "==========";
 	public static MainActivity inst = null;
-//	RadioButton rb1=null;
-//	RadioButton rb2=null;
+	RadioButton rb1=null;
+	RadioButton rb2=null;
 	TextView vers =null;
 	TextView desc =null;
 	TextView more =null;
-//	TextView method_desc =null;
-//	TextView method_more =null;
+	TextView method_desc =null;
+	TextView method_more =null;
 	EditText et =null;
 	Button save =null;
 	boolean bdescmore = false;
@@ -51,7 +51,7 @@ public class MainActivity extends Activity
         } catch (Throwable e) 
         {}
 		// проверяем был ли послан текст для записи	
-		handleReceivingSimpleData();
+        checkStartIntent();
         notif = new Notif(inst);
 		vers = (TextView) inst.findViewById(R.id.main_vers);
         try{
@@ -111,12 +111,6 @@ public class MainActivity extends Activity
         		st.hideKbd(inst);
             switch (v.getId())
             {
-//            case R.id.rbtn1:
-//            	setMethodChecked(1);
-//            	break;
-//            case R.id.rbtn2:
-//            	setMethodChecked(2);
-//            	break;
             case R.id.main_save:
             	String nm = et.getText().toString().trim();
             	if (nm.isEmpty())
@@ -140,6 +134,12 @@ public class MainActivity extends Activity
             		
             	}
                 return;
+//            case R.id.rbtn1:
+//            	setMethodChecked(1);
+//            	break;
+//            case R.id.rbtn2:
+//            	setMethodChecked(2);
+//            	break;
 //            case R.id.main_method_desc:
 //            case R.id.main_method_more:
 //            	if (bmetmore){
@@ -193,10 +193,12 @@ public class MainActivity extends Activity
     	return datetime;
     }
 	// проверяем был ли послан текст для записи в буфер	
-    public void handleReceivingSimpleData()
+    public void checkStartIntent()
     {
-    	Intent intent = new Intent();
-    	intent = getIntent();
+    	//Intent intent = new Intent();
+    	Intent intent = getIntent();
+    	if (intent == null)
+    		return;
     	String type = intent.getType ();
         String action = intent.getAction();
     	String txt = intent.getStringExtra(Intent.EXTRA_TEXT);

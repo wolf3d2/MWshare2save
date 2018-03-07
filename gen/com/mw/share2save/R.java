@@ -44,18 +44,19 @@ public final class R {
         /**      главное меню 
      главное меню 
          */
-        public static final int action_other_app=0x7f05000d;
-        public static final int add=0x7f050008;
-        public static final int add_error=0x7f050009;
+        public static final int action_other_app=0x7f05000e;
+        public static final int add=0x7f050009;
+        public static final int add_error=0x7f05000a;
+        public static final int add_sel=0x7f050008;
         public static final int app_name=0x7f050000;
         /**  title for main_activity     
  title for main_activity     
          */
         public static final int description=0x7f050002;
         public static final int filename=0x7f050005;
-        public static final int main_method_desc=0x7f05000a;
-        public static final int method1=0x7f05000b;
-        public static final int method2=0x7f05000c;
+        public static final int main_method_desc=0x7f05000b;
+        public static final int method1=0x7f05000c;
+        public static final int method2=0x7f05000d;
         public static final int read_more1=0x7f050003;
         public static final int read_more2=0x7f050004;
         public static final int save=0x7f050006;
