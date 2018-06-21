@@ -43,6 +43,17 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		inst = this;
+        if (!Perm.checkPermission(inst)) {
+        	Dlg.helpDialog(inst, inst.getString(R.string.perm_ann), new st.UniObserver() {
+				
+				@Override
+				public int OnObserver(Object param1, Object param2) {
+		            String[] perms = Perm.getPermissionStartArray();
+		            Perm.requestPermission(inst, perms, Perm.RPC);
+					return 0;
+				}
+			});
+        }
         try{
             Prefs.init(this);
             Prefs.readPreference();
@@ -214,6 +225,11 @@ public class MainActivity extends Activity
     }
     public void save (String txt)
     {
+        if (!Perm.checkPermission(inst)) {
+        	st.toast(R.string.perm_not_all_perm);
+        	return;
+        }
+    	
     	String fn = Prefs.getFilename();
     	File ff = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fn);
     	FileWriter wr;

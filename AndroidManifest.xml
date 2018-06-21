@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mw.share2save"
-    android:versionCode="9"
-    android:versionName="1.00.05" >
+    android:versionCode="10"
+    android:versionName="1.00.06" >
 
     <uses-sdk
         android:minSdkVersion="16"
-        android:targetSdkVersion="22" />
+        android:targetSdkVersion="26" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     

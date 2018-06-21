@@ -46,18 +46,22 @@ public class st extends Set
     public static void toast(String txt)
     {
         Context c = getMainContext();
-        Toast.makeText(c, txt, 700).show();
+        if (c!=null)
+        	Toast.makeText(c, txt, 700).show();
    	}
     // вывод сообщения по id длительностью 700мс
     public static void toast(int id)
     {
         Context c = getMainContext();
-        Toast.makeText(c, c.getString(id), 700).show();
+        if (c!=null)
+        	Toast.makeText(c, c.getString(id), 700).show();
    	}
     public static void toast(boolean cr,Integer ...id)
     {
     	String out = "";
         Context c = getMainContext();
+        if (c==null)
+        	return;
         for (int i=0; i<id.length;i++) {
         	if (cr)
         		out+=c.getString(id[i])+"\n";
