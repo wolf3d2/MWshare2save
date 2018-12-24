@@ -11,5 +11,6 @@ public class Set
     public static final String STR_ZERO = "0";
     public static final String STR_ONE = "1";
     public static final String STR_CR = "\n";
+	public static final String STR_RAZDELITEL = "==========";
 
 }

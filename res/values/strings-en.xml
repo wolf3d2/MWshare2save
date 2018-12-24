@@ -34,6 +34,6 @@
     
 <!--     главное меню -->
     
-    <string name="action_other_app">Other application</string>
+    <string name="action_other_app">(Ad) Other application</string>
     
 </resources>

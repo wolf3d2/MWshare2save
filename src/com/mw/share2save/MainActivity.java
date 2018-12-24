@@ -1,6 +1,7 @@
 package com.mw.share2save;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -22,8 +23,6 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity 
 {
-	public static final String CR = "\n";
-	public static final String RAZDELITEL = "==========";
 	public static MainActivity inst = null;
 	RadioButton rb1=null;
 	RadioButton rb2=null;
@@ -58,7 +57,7 @@ public class MainActivity extends Activity
             Prefs.init(this);
             Prefs.readPreference();
 // пример записи нового параметра в настройки
-//    		Pref.get().edit().putString("sss", "ssss").commit();
+//    		Pref.get().edit().putString("parameter", "value").commit();
         } catch (Throwable e) 
         {}
 		// проверяем был ли послан текст для записи	
@@ -184,7 +183,7 @@ public class MainActivity extends Activity
 		{
 		case R.id.action_other_app:
 	    	Intent intent = new Intent(Intent.ACTION_VIEW);
-	    	intent.setData(Uri.parse("https://play.google.com/store/apps/developer?id=Михаил+Вязенкин"));
+	    	intent.setData(Uri.parse(Set.ALL_APP_INMARKET));
 	    	inst.startActivity(intent);
 			return true;
 		}
@@ -203,27 +202,32 @@ public class MainActivity extends Activity
     	
     	return datetime;
     }
-	// проверяем был ли послан текст для записи в буфер	
-    public void checkStartIntent()
+	/** проверяем был ли послан текст для записи в буфер */	
+    public boolean checkStartIntent()
     {
     	//Intent intent = new Intent();
     	Intent intent = getIntent();
     	if (intent == null)
-    		return;
+    		return false;
     	String type = intent.getType ();
         String action = intent.getAction();
     	String txt = intent.getStringExtra(Intent.EXTRA_TEXT);
         if (txt ==null){
-        	return;
+        	return false;
         }
+    	boolean ret = false;
         if (Intent.ACTION_SEND.equals(action) && type != null) {
             if ("text/plain".equals(type)) {
-            	save(txt);
+            	addSaveStartText(txt);
+            	//addSaveAppendText(txt);
+            	ret = true;
             	//            	st.toast(getString(R.string.add));
             }
         }
+        return ret;
     }
-    public void save (String txt)
+    /** добавляет текст в конец файла */
+    public void addSaveAppendText(String txt)
     {
         if (!Perm.checkPermission(inst)) {
         	st.toast(R.string.perm_not_all_perm);
@@ -235,7 +239,9 @@ public class MainActivity extends Activity
     	FileWriter wr;
     	try{
     		wr= new FileWriter(ff, true);
-    		txt=inst.getCurrentDate()+CR+RAZDELITEL+CR+txt+CR+RAZDELITEL+CR+CR;
+    		txt=inst.getCurrentDate()+Set.STR_CR+Set.STR_RAZDELITEL
+    				+Set.STR_CR+txt+Set.STR_CR+Set.STR_RAZDELITEL
+    				+Set.STR_CR+Set.STR_CR;
 			 	wr.append(txt);
 			 	wr.flush();
 			 	wr.close();
@@ -248,6 +254,48 @@ public class MainActivity extends Activity
     	
     	finish();
 
+    }
+    /** добавляет текст в начало файла */
+    public void addSaveStartText(String txt)
+    {
+        if (!Perm.checkPermission(inst)) {
+        	st.toast(R.string.perm_not_all_perm);
+        	return;
+        }
+		txt=inst.getCurrentDate()+Set.STR_CR+Set.STR_RAZDELITEL
+		+Set.STR_CR+txt+Set.STR_CR+Set.STR_RAZDELITEL
+		+Set.STR_CR+Set.STR_CR;
+    	
+    	String fn = Prefs.getFilename();
+    	try {
+			MyRandomAccessFile eraf = new MyRandomAccessFile(
+					Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)+"/"+fn,
+					"rw");
+			eraf.insert(txt.getBytes(), 0);
+			eraf.close();
+        	st.toast(R.string.add);
+			
+		} catch (Throwable e) {
+		}
+    	
+//    	File ff = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fn);
+//    	FileWriter wr;
+//    	try{
+//    		wr= new FileWriter(ff, true);
+//    		txt=inst.getCurrentDate()+Set.STR_CR+Set.STR_RAZDELITEL
+//    				+Set.STR_CR+txt+Set.STR_CR+Set.STR_RAZDELITEL
+//    				+Set.STR_CR+Set.STR_CR;
+//			 	wr.append(txt);
+//			 	wr.flush();
+//			 	wr.close();
+//        	st.toast(R.string.add);
+//        }  catch (IOException e) 
+//    	{
+//        	e.printStackTrace();
+//        	st.toast(R.string.add_error);
+//    	};
+    	
+    	finish();
     }
     public void setFilename(String txt)
     {

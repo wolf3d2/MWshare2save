@@ -33,7 +33,7 @@
     <string name="method2">Метод 2</string>
     
 <!--     главное меню -->
-    <string name="action_other_app">Другие программы</string>
+    <string name="action_other_app">(Ad) Другие программы</string>
     
     
 </resources>
