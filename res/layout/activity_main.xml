@@ -5,25 +5,28 @@
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
     >
 
-<TextView
-    android:id="@+id/main_vers"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-        android:layout_alignParentBottom="false"
-    android:gravity="left"
-    android:text="ver"
-    android:textColor="#00f" 
-    />
+<!-- <TextView -->
+<!--     android:id="@+id/main_vers" -->
+<!--     android:layout_width="wrap_content" -->
+<!--     android:layout_height="wrap_content" -->
+<!--     android:layout_alignParentBottom="false" -->
+<!--     android:gravity="left" -->
+<!--     android:text="ver" -->
+<!--     android:textColor="#00f"  -->
+<!--     /> -->
 
 <ScrollView
     android:id="@+id/main_scroll"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
     android:layout_alignParentBottom="true"
-    android:layout_below="@+id/main_vers" 
     >
+<!--     android:layout_below="@+id/main_vers"  -->
     
 <LinearLayout
     android:layout_width="match_parent"
@@ -53,20 +56,32 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="15dp"
-    android:paddingLeft="5dp" 
-    android:paddingRight="5dp" 
-    android:text="@string/filename" 
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:text="@string/filename"
+    android:textSize="20sp" 
+    />
+
+<TextView
+    android:id="@+id/main_fname_txt_desc"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:text="@string/filename_desc"
     />
 
 <EditText
     android:id="@+id/main_fname"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#f99"
+    android:gravity="left|top"
     android:inputType="textMultiLine"
-    android:minLines="1"
+    android:maxLines="5"
+    android:minLines="5"
     android:paddingLeft="5dp"
-    android:paddingRight="5dp" 
+    android:paddingRight="5dp"
     android:textCursorDrawable="@null" >
 
     </EditText>
@@ -78,36 +93,6 @@
     android:layout_gravity="center_horizontal"
     android:layout_marginTop="15dp"
     android:text="@string/save" />
-
-<!-- <TextView -->
-<!--     android:id="@+id/main_method_desc" -->
-<!--     android:layout_width="match_parent" -->
-<!--     android:layout_height="wrap_content" -->
-<!--     android:maxLines="2" -->
-<!--     android:text="@string/main_method_desc"  -->
-<!--     /> -->
-
-<!-- <TextView -->
-<!--     android:id="@+id/main_method_more" -->
-<!--     android:layout_width="match_parent" -->
-<!--     android:layout_height="wrap_content" -->
-<!--     android:gravity="center_horizontal" -->
-<!--     android:text="@string/read_more1" -->
-<!--     android:textColor="#f00" /> -->
-
-<!-- <RadioButton -->
-<!--     android:id="@+id/rbtn1" -->
-<!--     android:layout_width="wrap_content" -->
-<!--     android:layout_height="wrap_content" -->
-<!--     android:text="@string/method1"  -->
-<!--     /> -->
-
-<!-- <RadioButton -->
-<!--     android:id="@+id/rbtn2" -->
-<!--     android:layout_width="wrap_content" -->
-<!--     android:layout_height="wrap_content" -->
-<!--     android:text="@string/method2"  -->
-<!--     /> -->
 
 </LinearLayout>
 </ScrollView>

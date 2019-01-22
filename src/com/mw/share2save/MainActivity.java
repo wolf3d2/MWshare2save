@@ -1,42 +1,56 @@
 package com.mw.share2save;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.view.KeyEvent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 public class MainActivity extends Activity 
 {
+	String[] arFname = null;
 	public static MainActivity inst = null;
-	RadioButton rb1=null;
-	RadioButton rb2=null;
-	TextView vers =null;
+//	TextView vers =null;
 	TextView desc =null;
 	TextView more =null;
-	TextView method_desc =null;
-	TextView method_more =null;
 	EditText et =null;
 	Button save =null;
+	boolean bchange = false;
+	// развернуть/свернуть описание
 	boolean bdescmore = false;
-	boolean bmetmore = false;
-	Notif notif = null;
-	
+	boolean changed = false;
+	TextWatcher tw = new TextWatcher() {
+		@Override
+		public void afterTextChanged(Editable s) {
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			
+		}
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
+			changed = true;
+		}
+	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,57 +74,31 @@ public class MainActivity extends Activity
 //    		Pref.get().edit().putString("parameter", "value").commit();
         } catch (Throwable e) 
         {}
+        arFname = getFilenameArray();
 		// проверяем был ли послан текст для записи	
         checkStartIntent();
-        notif = new Notif(inst);
-		vers = (TextView) inst.findViewById(R.id.main_vers);
-        try{
-            String ver = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-            String app = getString(R.string.version)+" "+ver;
-            vers.setText(app);
-        }
-        catch (Throwable e) {}
+//		vers = (TextView) inst.findViewById(R.id.main_vers);
+//        try{
+//            String ver = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+//            String app = getString(R.string.version)+" "+ver;
+//            vers.setText(app);
+//        }
+//        catch (Throwable e) {}
 		desc = (TextView) inst.findViewById(R.id.main_desc);
 		desc.setOnClickListener(m_ClickListener);
 		more = (TextView) inst.findViewById(R.id.main_read_more);
 		more.setOnClickListener(m_ClickListener);
-//		method_desc = (TextView) inst.findViewById(R.id.main_method_desc);
-//		method_desc.setOnClickListener(m_ClickListener);
-//		method_more = (TextView) inst.findViewById(R.id.main_method_more);
-//		method_more.setOnClickListener(m_ClickListener);
 		
 		et = (EditText) inst.findViewById(R.id.main_fname);
-		setFilename(Prefs.getFilename());
+		et.setText(getFilenameString());
+		et.addTextChangedListener(tw);
+    	changed = false;
+
+		//setFilenameToEditText(getFilenameString());
 		
 		save = (Button) inst.findViewById(R.id.main_save);
 		save.setOnClickListener(m_ClickListener);
-//		rb1 = (RadioButton) inst.findViewById(R.id.rbtn1);
-//		rb1.setOnClickListener(m_ClickListener);
-//		rb2= (RadioButton) inst.findViewById(R.id.rbtn2);
-//		rb2.setOnClickListener(m_ClickListener);
-		setMethodChecked(-1);
 
-	}
-	private void setMethodChecked(int mode)
-	{
-		// вызов при старте программы
-		if (mode == -1)
-			mode = Prefs.getMethod();
-		Prefs.setInt(Prefs.METHOD, mode);
-//		switch (mode)
-//		{
-//		case 1:
-//			rb1.setChecked(true);
-//			rb2.setChecked(false);
-//			notif.dismiss(Notif.NOTIFY_ID);;
-//			break;
-//		case 2:
-//			rb1.setChecked(false);
-//			rb2.setChecked(true);
-//			notif.createNotif();
-//			break;
-//		}
-		
 	}
     View.OnClickListener m_ClickListener = new View.OnClickListener()
     {
@@ -122,14 +110,7 @@ public class MainActivity extends Activity
             switch (v.getId())
             {
             case R.id.main_save:
-            	String nm = et.getText().toString().trim();
-            	if (nm.isEmpty())
-            		Prefs.setFilename(Prefs.FILENAME_DEF);
-            	else{
-            		setFilename(nm);
-            		Prefs.setFilename(et.getText().toString().trim());
-            	}
-            	st.toast(R.string.saved);
+            	saveFilename();
             	return;
             case R.id.main_desc:
             case R.id.main_read_more:
@@ -139,34 +120,34 @@ public class MainActivity extends Activity
             		more.setText(R.string.read_more1);
             	} else {
             		bdescmore = true;
-            		desc.setMaxLines(25);
+            		desc.setMaxLines(35);
             		more.setText(R.string.read_more2);
             		
             	}
                 return;
-//            case R.id.rbtn1:
-//            	setMethodChecked(1);
-//            	break;
-//            case R.id.rbtn2:
-//            	setMethodChecked(2);
-//            	break;
-//            case R.id.main_method_desc:
-//            case R.id.main_method_more:
-//            	if (bmetmore){
-//            		bmetmore = false;
-//            		method_desc.setMaxLines(2);
-//            		method_more.setText(R.string.read_more1);
-//            	} else {
-//            		bmetmore = true;
-//            		method_desc.setMaxLines(25);
-//            		method_more.setText(R.string.read_more2);
-//            		
-//            	}
-//                return;
             }
         }
     };
 
+	@Override
+	public void onBackPressed() {
+		if (changed) {
+			Dlg.yesNoDialog(inst, inst.getString(R.string.data_changed), new st.UniObserver() {
+				
+				@Override
+				public int OnObserver(Object param1, Object param2) {
+                    if(((Integer)param1).intValue()==AlertDialog.BUTTON_POSITIVE)
+                    {
+    					saveFilename();
+                    }
+					finish();
+					return 0;
+				}
+			});
+		} else
+			super.onBackPressed();
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -176,15 +157,45 @@ public class MainActivity extends Activity
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent in;
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		switch (item.getItemId())
 		{
+		case R.id.action_about:
+			String text = inst.getString(R.string.app_name)+st.STR_CR;
+	        try{
+	            String ver = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+	            String app = getString(R.string.version)+" "+ver;
+	            text+=app+st.STR_CR+st.STR_CR;
+	        }
+	        catch (Throwable e) {}
+	        text+=inst.getString(R.string.about_author)+inst.getString(R.string.about_author_desc);
+			Dlg.helpDialog(inst, text);
+			return true;
+		case R.id.action_rate:
+			String link =  "https://play.google.com/store/apps/details?id=";
+			try {
+				link += inst.getPackageName();
+			} catch (Throwable e) {
+				return true;
+			}
+			try {
+		    	in = new Intent(Intent.ACTION_VIEW);
+		    	in.setData(Uri.parse(link));
+		    	inst.startActivity(in);
+			} catch (Throwable e) {
+			}
+			return true;
 		case R.id.action_other_app:
-	    	Intent intent = new Intent(Intent.ACTION_VIEW);
-	    	intent.setData(Uri.parse(Set.ALL_APP_INMARKET));
-	    	inst.startActivity(intent);
+			try {
+		    	in= new Intent(Intent.ACTION_VIEW);
+		    	in.setData(Uri.parse(Set.ALL_APP_INMARKET));
+		    	inst.startActivity(in);
+				
+			} catch (Throwable e) {
+			}
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -218,7 +229,7 @@ public class MainActivity extends Activity
     	boolean ret = false;
         if (Intent.ACTION_SEND.equals(action) && type != null) {
             if ("text/plain".equals(type)) {
-            	addSaveStartText(txt);
+            	addSaveText(txt);
             	//addSaveAppendText(txt);
             	ret = true;
             	//            	st.toast(getString(R.string.add));
@@ -226,15 +237,55 @@ public class MainActivity extends Activity
         }
         return ret;
     }
+    public void addSaveText(String txt) {
+    	if (arFname.length < 2)
+    		addSaveStartText(txt, arFname[1]);
+    	else
+    		addSaveTextDialog(txt);
+    	
+    }
+    public void addSaveTextDialog(final String addtext)
+    {
+    	final String[] ars = new String[arFname.length+2];
+    	ars[0] = inst.getString(R.string.cancel);
+    	ars[1] = inst.getString(R.string.in_app);
+    	for (int i=0;i<arFname.length;i++) {
+    		ars[i+2]= arFname[i];
+    	}
+       	ArrayAdapter<String> ar = new ArrayAdapter<String>(this, 
+       			R.layout.item_list,
+                ars
+                );
+        
+        Dlg.customMenu(this, ar, 
+        		inst.getString(R.string.actions), 
+        		new st.UniObserver()
+        {
+            @Override
+            public int OnObserver(Object param1, Object param2)
+            {
+                int pos = (((Integer)param1).intValue());
+                if (pos == 0)
+                	finish();
+                else if (pos == 1)
+                	return 0;
+                else {
+                	addSaveStartText(addtext,ars[pos]);
+                }
+                	
+			return 0;
+            }
+        });
+    }
     /** добавляет текст в конец файла */
-    public void addSaveAppendText(String txt)
+    public void addSaveAppendText(String txt, String fn)
     {
         if (!Perm.checkPermission(inst)) {
         	st.toast(R.string.perm_not_all_perm);
         	return;
         }
     	
-    	String fn = Prefs.getFilename();
+    	//String fn = Prefs.getFilename();
     	File ff = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fn);
     	FileWriter wr;
     	try{
@@ -256,7 +307,7 @@ public class MainActivity extends Activity
 
     }
     /** добавляет текст в начало файла */
-    public void addSaveStartText(String txt)
+    public void addSaveStartText(String txt, String fn)
     {
         if (!Perm.checkPermission(inst)) {
         	st.toast(R.string.perm_not_all_perm);
@@ -266,7 +317,7 @@ public class MainActivity extends Activity
 		+Set.STR_CR+txt+Set.STR_CR+Set.STR_RAZDELITEL
 		+Set.STR_CR+Set.STR_CR;
     	
-    	String fn = Prefs.getFilename();
+    	//fn = Prefs.getFilename();
     	try {
 			MyRandomAccessFile eraf = new MyRandomAccessFile(
 					Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)+"/"+fn,
@@ -277,40 +328,53 @@ public class MainActivity extends Activity
 			
 		} catch (Throwable e) {
 		}
-    	
-//    	File ff = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fn);
-//    	FileWriter wr;
-//    	try{
-//    		wr= new FileWriter(ff, true);
-//    		txt=inst.getCurrentDate()+Set.STR_CR+Set.STR_RAZDELITEL
-//    				+Set.STR_CR+txt+Set.STR_CR+Set.STR_RAZDELITEL
-//    				+Set.STR_CR+Set.STR_CR;
-//			 	wr.append(txt);
-//			 	wr.flush();
-//			 	wr.close();
-//        	st.toast(R.string.add);
-//        }  catch (IOException e) 
-//    	{
-//        	e.printStackTrace();
-//        	st.toast(R.string.add_error);
-//    	};
-    	
     	finish();
     }
-    public void setFilename(String txt)
+    public String getFilenameString()
     {
-    	if (txt== null)
-    		return;
-		if (txt.compareTo(Prefs.FILENAME_DEF)!=0){
-			if (!txt.startsWith("_"))
-				txt="_"+txt;
-			if (!txt.endsWith(Prefs.FILENAME_EXT_DEF)){
-				txt += Prefs.FILENAME_EXT_DEF;
-			}
-		} else
-			txt = "";
-		if (et!=null)
-			et.setText(txt);
-   	
+		String fn = Prefs.getFilename();
+		if (fn==null|fn.startsWith(Prefs.FILENAME_DEF))
+			return st.STR_NULL;
+		String ar[] = fn.split(st.STR_COMMA);
+		fn = st.STR_NULL;
+		for (int i=0;i<ar.length;i++) {
+			if (ar[i].isEmpty())
+				continue;
+			if (!ar[i].startsWith(st.STR_UNDERSCORING))
+				ar[i]=st.STR_UNDERSCORING+ar[i];
+			if (!ar[i].endsWith(Prefs.FILENAME_EXT_DEF))
+				ar[i]+=Prefs.FILENAME_EXT_DEF;
+			fn += ar[i]+st.STR_CR;
+		}
+		
+		return fn;
     }
+    public String[] getFilenameArray()
+    {
+		String fn = getFilenameString();
+		if (fn==null)
+			return new String[] {Prefs.FILENAME_DEF};
+		return fn.split(st.STR_CR);
+    }
+    /** сохраняем массив имён файлов в настройки если EditText менялся */
+	public void saveFilename() {
+		if (changed) {
+        	String nm = et.getText().toString().trim();
+        	if (nm.isEmpty())
+        		Prefs.setFilename(Prefs.FILENAME_DEF);
+        	else{
+        		int ind = nm.indexOf(st.STR_CR);
+        		while (ind>-1) {
+        			nm=nm.substring(0,ind)+st.STR_COMMA+nm.substring(ind+1);
+            		ind = nm.indexOf(st.STR_CR);
+        		}
+        		Prefs.setFilename(nm);
+        		et.setText(getFilenameString());
+        		//setFilenameToEditText(nm);
+        	}
+        	changed = false;
+        	st.toast(R.string.saved);
+		}
+	}
+    
 }

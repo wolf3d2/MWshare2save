@@ -40,7 +40,7 @@ public class Dlg
      * @param but3 Текст кнопки BUTTON_NEUTRAL или null, если кнопка не нужна
      * @param callback Обработчик нажатия кнопок. Конструкция вызова - callback.OnObserver(Integer buttonCode, callback.m_param2)
      * @return Возвращает созданный диалог*/
-        public static AlertDialog CustomDialog(Context c,View customView,String but1,String but2,String but3,UniObserver callback)
+        public static AlertDialog customDialog(Context c,View customView,String but1,String but2,String but3,UniObserver callback)
         {
             AlertDialog.Builder bd = new AlertDialog.Builder(c);
             dlg = bd.create();
@@ -53,7 +53,7 @@ public class Dlg
             return dlg;
         }
 ////        
-        public static AlertDialog CustomViewAndMenu(Context c, View customView, ListAdapter adapter,String title,UniObserver callback)
+        public static AlertDialog customViewAndMenu(Context c, View customView, ListAdapter adapter,String title,UniObserver callback)
         {
             AlertDialog.Builder bd = new AlertDialog.Builder(c);
             final UniObserver obs = callback;
@@ -73,7 +73,7 @@ public class Dlg
             return dlg;
             
         }
-        public static AlertDialog CustomMenu(Context c,ListAdapter adapter,String title,UniObserver callback)
+        public static AlertDialog customMenu(Context c,ListAdapter adapter,String title,UniObserver callback)
         {
             AlertDialog.Builder bd = new AlertDialog.Builder(c);
             final UniObserver obs = callback;

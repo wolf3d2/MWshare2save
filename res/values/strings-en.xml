@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">MW share2save</string>
     <string name="version">Version</string>
-    
+	
 <!--     общее-->
     <string name="search">Search</string>
 	<string name="ok">Ok</string>
@@ -13,27 +13,33 @@
 	<string name="create">Create</string>
 	<string name="delete">Delete</string>
     <string name="not_work">Does not work yet</string>
-
+    <string name="data_changed">Data has been changed.\nDo you want to save changes?</string>
+	<string name="actions">Actions</string>
+    <string name="in_app">In the app</string>
+    
 <!-- title for permission-->
     <string name="perm_not_all_perm">Not all required permissions have been granted</string>
     <string name="perm_ann">For a proper work, the program requires your permission to access Internal Storage.\nWithout this permission, the program will not be able to work!</string>
     
 <!-- title for main_activity     -->
-    <string name="description">This program adds the text transfered to it, via the Share button, to the file specified by the user in the DOWNLOAD FOLDER.\n\nJust enter the name of the file in which you would like to add selected text (without .txt. The file extension will be added automatically), and, then, send any selected text to it via the Share button ("Send" in some programs), it will be saved in the specified file.\n\nIf the file name is not specified, by default it will be saved to the _MWshare2save.txt file.\n\nThe underlining at the beginning of the file name is added specifically for the file to be at the top of the list of files in the Download folder.</string>
+	<string name="description">This program inserts a text received via the Share button to one of the user-specified files in the DOWNLOAD FOLDER.\n\nJust list file names in the input field below, and an entry will be added to one of them (without .txt , the program will add the extension itself); then send any selected text to the program via the Share button (Send in some programs), and it will be saved in the file you specified.\n\nIf the file name is not specified, the default entries will be saved in the _MWshare2save.txt file.\n\nThe underscore at the beginning of the file names is added specifically so that the files could be at the top of the list in the download folder.</string>
     <string name="read_more1">--- Expand Description ---</string>
     <string name="read_more2">--- Collapse ---</string>
-    <string name="filename">Name of the file where to add:</string>
-    <string name="save">Save</string>
+	<string name="filename">File names where to insert</string>
+	<string name="filename_desc">Each file name should start on a new line</string>
+	<string name="save">Save</string>
     <string name="saved">Saved</string>
     <string name="add_sel">Add selected text</string>
     <string name="add">Added</string>
     <string name="add_error">Error!\nFailed to add!</string>
-    <string name="main_method_desc">Methods.\nSelected text can be saved using two different methods:\n method 1: via the Share button (if the program, where the selection is made, has this button), with this method the program does not run and starts to run at the moment of transfer of the text for saving. After saving, it  closes immediately.\nmethod 2: there is a notification in the panel, when you click on it, selected text will be send to save.\nTherefore, if some kind of RAM is used, it is extremely meager.</string>
-    <string name="method1">Method 1</string>
-    <string name="method2">Method 2</string>
     
 <!--     главное меню -->
-    
+    <string name="action_about">About</string>
+    <string name="action_rate">Rate app</string>
     <string name="action_other_app">(Ad) Other application</string>
+    
+<!-- О программе -->
+    <string name="about_author">Developer:</string>
+    <string name="about_author_desc">Michail Wyazenkin</string>
     
 </resources>

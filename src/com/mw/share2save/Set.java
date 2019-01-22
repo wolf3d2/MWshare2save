@@ -8,6 +8,9 @@ public class Set
 	// строковые константы для уменьшения объёма занимаемой памяти
     public static final String STR_NULL = "";
     public static final String STR_SPACE = " ";
+    public static final String STR_POINT = ".";
+    public static final String STR_COMMA = ",";
+    public static final String STR_UNDERSCORING = "_";
     public static final String STR_ZERO = "0";
     public static final String STR_ONE = "1";
     public static final String STR_CR = "\n";
