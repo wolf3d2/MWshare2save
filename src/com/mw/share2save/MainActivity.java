@@ -239,7 +239,7 @@ public class MainActivity extends Activity
     }
     public void addSaveText(String txt) {
     	if (arFname.length < 2)
-    		addSaveStartText(txt, arFname[1]);
+    		addSaveStartText(txt, arFname[0]);
     	else
     		addSaveTextDialog(txt);
     	
@@ -353,6 +353,8 @@ public class MainActivity extends Activity
     {
 		String fn = getFilenameString();
 		if (fn==null)
+			return new String[] {Prefs.FILENAME_DEF};
+		if (fn.length()==0)
 			return new String[] {Prefs.FILENAME_DEF};
 		return fn.split(st.STR_CR);
     }
