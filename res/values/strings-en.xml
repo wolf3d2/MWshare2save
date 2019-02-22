@@ -32,6 +32,7 @@
     <string name="add_sel">Add selected text</string>
     <string name="add">Added</string>
     <string name="add_error">Error!\nFailed to add!</string>
+    <string name="pref_where_append_record">If checked, the entry will be added to the beginning of the file, otherwise to the end</string>
     
 <!--     главное меню -->
     <string name="action_about">About</string>

@@ -86,6 +86,14 @@
 
     </EditText>
 
+<CheckBox
+    android:id="@+id/cb_where_record"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="20sp" 
+    android:text="@string/pref_where_append_record"
+    />
+
 <Button
     android:id="@+id/main_save"
     android:layout_width="wrap_content"

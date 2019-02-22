@@ -32,6 +32,7 @@
     <string name="add">Добавлено</string>
     <string name="add_sel">Добавить выделенное</string>
     <string name="add_error">Ошибка!\nНе получилось добавить!</string>
+    <string name="pref_where_append_record">Если отмечено, то запись добавляется в начало файла, иначе в конец</string>
     
 <!--     главное меню -->
     <string name="action_about">О программе</string>

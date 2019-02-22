@@ -9,11 +9,15 @@ public class Prefs
 {
 	private static Prefs inst;
 	SharedPreferences mPref;
-// ключ, имя файла для добавления текста
+	/** куда добавлять запись, в начало файла, или конец */
+	public static boolean where_rec = false;
+/** ключ, имя файла для добавления текста */
 	public static String FILENAME= "add_filename";
 	public static String FILENAME_DEF= "_MWshare2save.txt";
 	public static String FILENAME_EXT_DEF= ".txt";
 	public static String METHOD = "save_method";
+	/** ключ, куда добавлять запись - начало или конец файла */
+	public static String WHERE_RECORD = "where_record";
 
 	public static void init(Context c)
 	{
@@ -26,6 +30,7 @@ public class Prefs
 	public static void readPreference()
 	{
 		removePreferences();
+		where_rec = Prefs.getBoolean(Prefs.WHERE_RECORD, false);
 	}
 	// удаляем лишние (неиспользуемые) настройки
 	public static void removePreferences()

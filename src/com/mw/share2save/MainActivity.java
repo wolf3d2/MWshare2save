@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ public class MainActivity extends Activity
 	TextView more =null;
 	EditText et =null;
 	Button save =null;
+	CheckBox cb_where = null;
 	boolean bchange = false;
 	// развернуть/свернуть описание
 	boolean bdescmore = false;
@@ -99,6 +101,9 @@ public class MainActivity extends Activity
 		save = (Button) inst.findViewById(R.id.main_save);
 		save.setOnClickListener(m_ClickListener);
 
+		cb_where = (CheckBox) inst.findViewById(R.id.cb_where_record);
+		cb_where.setChecked(Prefs.where_rec);
+		cb_where.setOnClickListener(m_ClickListener);
 	}
     View.OnClickListener m_ClickListener = new View.OnClickListener()
     {
@@ -109,7 +114,11 @@ public class MainActivity extends Activity
         		st.hideKbd(inst);
             switch (v.getId())
             {
+            case R.id.cb_where_record:
+            	savePrefs();
+            	return;
             case R.id.main_save:
+            	savePrefs();
             	saveFilename();
             	return;
             case R.id.main_desc:
@@ -131,6 +140,7 @@ public class MainActivity extends Activity
 
 	@Override
 	public void onBackPressed() {
+		savePrefs();
 		if (changed) {
 			Dlg.yesNoDialog(inst, inst.getString(R.string.data_changed), new st.UniObserver() {
 				
@@ -238,10 +248,17 @@ public class MainActivity extends Activity
         return ret;
     }
     public void addSaveText(String txt) {
-    	if (arFname.length < 2)
-    		addSaveStartText(txt, arFname[0]);
-    	else
-    		addSaveTextDialog(txt);
+    	if (Prefs.where_rec) {
+        	if (arFname.length < 2)
+        		addSaveStartText(txt, arFname[0]);
+        	else
+        		addSaveTextDialog(txt);
+    	} else {
+        	if (arFname.length < 2)
+        		addSaveAppendText(txt, arFname[0]);
+        	else
+        		addSaveTextDialog(txt);
+    	}
     	
     }
     public void addSaveTextDialog(final String addtext)
@@ -270,7 +287,10 @@ public class MainActivity extends Activity
                 else if (pos == 1)
                 	return 0;
                 else {
-                	addSaveStartText(addtext,ars[pos]);
+                	if (Prefs.where_rec)
+                    	addSaveStartText(addtext,ars[pos]);
+                	else
+                		addSaveAppendText(addtext,ars[pos]);
                 }
                 	
 			return 0;
@@ -376,6 +396,11 @@ public class MainActivity extends Activity
         	}
         	changed = false;
         	st.toast(R.string.saved);
+		}
+	}
+	public void savePrefs() {
+		if (cb_where!=null) {
+			Prefs.setBoolean(Prefs.WHERE_RECORD, cb_where.isChecked());
 		}
 	}
     
