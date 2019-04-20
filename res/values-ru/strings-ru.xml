@@ -27,6 +27,7 @@
     <string name="read_more2">--- Свернуть ---</string>
     <string name="filename">Имена файлов куда добавлять:</string>
     <string name="filename_desc">Каждое имя файла должно быть с новой строки</string>
+    <string name="save_query">Имеется несохранённая запись.\nСохранить?</string>
     <string name="save">Сохранить</string>
     <string name="saved">Сохранено</string>
     <string name="add">Добавлено</string>

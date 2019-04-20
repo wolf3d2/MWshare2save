@@ -25,9 +25,11 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity 
 {
+	String record = null;
 	String[] arFname = null;
 	public static MainActivity inst = null;
 //	TextView vers =null;
+	Button btn_rec = null;
 	TextView desc =null;
 	TextView more =null;
 	EditText et =null;
@@ -77,6 +79,10 @@ public class MainActivity extends Activity
         } catch (Throwable e) 
         {}
         arFname = getFilenameArray();
+        btn_rec = (Button) inst.findViewById(R.id.main_save_query);
+        btn_rec.setOnClickListener(m_ClickListener);
+        btn_rec.setVisibility(View.GONE);
+
 		// проверяем был ли послан текст для записи	
         checkStartIntent();
 //		vers = (TextView) inst.findViewById(R.id.main_vers);
@@ -114,6 +120,9 @@ public class MainActivity extends Activity
         		st.hideKbd(inst);
             switch (v.getId())
             {
+            case R.id.main_save_query:
+            	addSaveText(record);
+            	return;
             case R.id.cb_where_record:
             	savePrefs();
             	return;
@@ -234,6 +243,7 @@ public class MainActivity extends Activity
         String action = intent.getAction();
     	String txt = intent.getStringExtra(Intent.EXTRA_TEXT);
         if (txt ==null){
+        	record = null;
         	return false;
         }
     	boolean ret = false;
@@ -248,6 +258,7 @@ public class MainActivity extends Activity
         return ret;
     }
     public void addSaveText(String txt) {
+    	record = txt;
     	if (Prefs.where_rec) {
         	if (arFname.length < 2)
         		addSaveStartText(txt, arFname[0]);
@@ -263,6 +274,8 @@ public class MainActivity extends Activity
     }
     public void addSaveTextDialog(final String addtext)
     {
+    	if (record!=null)
+    		btn_rec.setVisibility(View.VISIBLE);
     	final String[] ars = new String[arFname.length+2];
     	ars[0] = inst.getString(R.string.cancel);
     	ars[1] = inst.getString(R.string.in_app);
@@ -316,12 +329,14 @@ public class MainActivity extends Activity
 			 	wr.append(txt);
 			 	wr.flush();
 			 	wr.close();
+	        	record = null;
         	st.toast(R.string.add);
         }  catch (IOException e) 
     	{
         	e.printStackTrace();
         	st.toast(R.string.add_error);
     	};
+    	record = null;
     	
     	finish();
 
@@ -344,6 +359,7 @@ public class MainActivity extends Activity
 					"rw");
 			eraf.insert(txt.getBytes(), 0);
 			eraf.close();
+        	record = null;
         	st.toast(R.string.add);
 			
 		} catch (Throwable e) {

@@ -27,7 +27,8 @@
     <string name="read_more2">--- Collapse ---</string>
 	<string name="filename">File names where to insert</string>
 	<string name="filename_desc">Each file name should start on a new line</string>
-	<string name="save">Save</string>
+    <string name="save_query">Имеется несохранённая запись.\nСохранить?</string>
+		<string name="save">Save</string>
     <string name="saved">Saved</string>
     <string name="add_sel">Add selected text</string>
     <string name="add">Added</string>
