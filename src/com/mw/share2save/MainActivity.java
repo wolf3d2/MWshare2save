@@ -100,6 +100,16 @@ public class MainActivity extends Activity
 		et = (EditText) inst.findViewById(R.id.main_fname);
 		et.setText(getFilenameString());
 		et.addTextChangedListener(tw);
+//		et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//			
+//			@Override
+//			public void onFocusChange(View v, boolean bfocus) {
+//				if (!bfocus) {
+//	            	savePrefs();
+//	            	saveFilename();
+//				}
+//			}
+//		});
     	changed = false;
 
 		//setFilenameToEditText(getFilenameString());
@@ -121,6 +131,8 @@ public class MainActivity extends Activity
             switch (v.getId())
             {
             case R.id.main_save_query:
+            	savePrefs();
+            	saveFilename();
             	addSaveText(record);
             	return;
             case R.id.cb_where_record:
@@ -259,6 +271,7 @@ public class MainActivity extends Activity
     }
     public void addSaveText(String txt) {
     	record = txt;
+        arFname = getFilenameArray();
     	if (Prefs.where_rec) {
         	if (arFname.length < 2)
         		addSaveStartText(txt, arFname[0]);
@@ -276,6 +289,7 @@ public class MainActivity extends Activity
     {
     	if (record!=null)
     		btn_rec.setVisibility(View.VISIBLE);
+        //arFname = getFilenameArray();
     	final String[] ars = new String[arFname.length+2];
     	ars[0] = inst.getString(R.string.cancel);
     	ars[1] = inst.getString(R.string.in_app);
@@ -402,6 +416,7 @@ public class MainActivity extends Activity
         		Prefs.setFilename(Prefs.FILENAME_DEF);
         	else{
         		int ind = nm.indexOf(st.STR_CR);
+        		// меняем \n на запятые
         		while (ind>-1) {
         			nm=nm.substring(0,ind)+st.STR_COMMA+nm.substring(ind+1);
             		ind = nm.indexOf(st.STR_CR);

@@ -11,11 +11,10 @@ public class Prefs
 	SharedPreferences mPref;
 	/** куда добавлять запись, в начало файла, или конец */
 	public static boolean where_rec = false;
-/** ключ, имя файла для добавления текста */
+/** ключ, имя файла(ов) для добавления текста */
 	public static String FILENAME= "add_filename";
 	public static String FILENAME_DEF= "_MWshare2save.txt";
 	public static String FILENAME_EXT_DEF= ".txt";
-	public static String METHOD = "save_method";
 	/** ключ, куда добавлять запись - начало или конец файла */
 	public static String WHERE_RECORD = "where_record";
 
@@ -75,10 +74,6 @@ public class Prefs
 	{
 		inst.mPref.edit().putString(FILENAME, value).commit();
 		readPreference();
-	}
-	public static final int getMethod()
-	{
-		return get().getInt(METHOD, 1);
 	}
 
 }
