@@ -30,11 +30,13 @@ public class MainActivity extends Activity
 	public static MainActivity inst = null;
 //	TextView vers =null;
 	Button btn_rec = null;
-	TextView desc =null;
-	TextView more =null;
-	EditText et =null;
-	Button save =null;
+	TextView desc = null;
+	TextView more = null;
+	EditText et = null;
+	Button save = null;
 	CheckBox cb_where = null;
+	CheckBox cb_rec_separ = null;
+	EditText et_rec_separ = null;
 	boolean bchange = false;
 	// развернуть/свернуть описание
 	boolean bdescmore = false;
@@ -120,7 +122,19 @@ public class MainActivity extends Activity
 		cb_where = (CheckBox) inst.findViewById(R.id.cb_where_record);
 		cb_where.setChecked(Prefs.where_rec);
 		cb_where.setOnClickListener(m_ClickListener);
+		
+		cb_rec_separ = (CheckBox) inst.findViewById(R.id.cb_record_separator);
+		cb_rec_separ.setChecked(Prefs.rec_cb_separator);
+		cb_rec_separ.setOnClickListener(m_ClickListener);
+		
+		et_rec_separ = (EditText) inst.findViewById(R.id.main__record_separator);
+//		if (Prefs.rec_cb_separator&&Prefs.rec_et_separator.isEmpty()) {
+//			Prefs.setString(Prefs.RECORD_LINE_SEPARATOR, Set.STR_RAZDELITEL);
+//		}
+		et_rec_separ.setText(Prefs.rec_et_separator);
+
 	}
+	
     View.OnClickListener m_ClickListener = new View.OnClickListener()
     {
         @Override
@@ -135,6 +149,7 @@ public class MainActivity extends Activity
             	saveFilename();
             	addSaveText(record);
             	return;
+            case R.id.cb_record_separator:
             case R.id.cb_where_record:
             	savePrefs();
             	return;
@@ -195,11 +210,11 @@ public class MainActivity extends Activity
 		switch (item.getItemId())
 		{
 		case R.id.action_about:
-			String text = inst.getString(R.string.app_name)+st.STR_CR;
+			String text = inst.getString(R.string.app_name)+st.STR_LF;
 	        try{
 	            String ver = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
 	            String app = getString(R.string.version)+" "+ver;
-	            text+=app+st.STR_CR+st.STR_CR;
+	            text+=app+st.STR_LF+st.STR_LF;
 	        }
 	        catch (Throwable e) {}
 	        text+=inst.getString(R.string.about_author)+inst.getString(R.string.about_author_desc);
@@ -337,9 +352,17 @@ public class MainActivity extends Activity
     	FileWriter wr;
     	try{
     		wr= new FileWriter(ff, true);
-    		txt=inst.getCurrentDate()+Set.STR_CR+Set.STR_RAZDELITEL
-    				+Set.STR_CR+txt+Set.STR_CR+Set.STR_RAZDELITEL
-    				+Set.STR_CR+Set.STR_CR;
+    		String start = st.STR_NULL;
+    		String end= st.STR_LF;
+    		start=inst.getCurrentDate()+Set.STR_LF;
+    		if (Prefs.rec_cb_separator) {
+    			start+= Prefs.rec_et_separator+Set.STR_LF;
+    			end = Set.STR_LF+Prefs.rec_et_separator+Set.STR_LF+Set.STR_LF;
+    		}
+    		txt=start+txt+end; 
+//    		txt=inst.getCurrentDate()+Set.STR_LF+Prefs.rec_et_separator
+//    				+txt+Set.STR_LF+Prefs.rec_et_separator
+//    				+Set.STR_LF+Set.STR_LF;
 			 	wr.append(txt);
 			 	wr.flush();
 			 	wr.close();
@@ -362,9 +385,18 @@ public class MainActivity extends Activity
         	st.toast(R.string.perm_not_all_perm);
         	return;
         }
-		txt=inst.getCurrentDate()+Set.STR_CR+Set.STR_RAZDELITEL
-		+Set.STR_CR+txt+Set.STR_CR+Set.STR_RAZDELITEL
-		+Set.STR_CR+Set.STR_CR;
+		String start = st.STR_NULL;
+		String end= st.STR_LF;
+		start=inst.getCurrentDate()+Set.STR_LF;
+		if (Prefs.rec_cb_separator) {
+			start+= Prefs.rec_et_separator+Set.STR_LF;
+			end = Set.STR_LF+Prefs.rec_et_separator+Set.STR_LF+Set.STR_LF;
+		}
+		txt=start+txt+end; 
+
+//		txt=inst.getCurrentDate()+Set.STR_LF+Prefs.rec_et_separator
+//		+Set.STR_LF+txt+Set.STR_LF+Prefs.rec_et_separator
+//		+Set.STR_LF+Set.STR_LF;
     	
     	//fn = Prefs.getFilename();
     	try {
@@ -394,7 +426,7 @@ public class MainActivity extends Activity
 				ar[i]=st.STR_UNDERSCORING+ar[i];
 			if (!ar[i].endsWith(Prefs.FILENAME_EXT_DEF))
 				ar[i]+=Prefs.FILENAME_EXT_DEF;
-			fn += ar[i]+st.STR_CR;
+			fn += ar[i]+st.STR_LF;
 		}
 		
 		return fn;
@@ -406,7 +438,7 @@ public class MainActivity extends Activity
 			return new String[] {Prefs.FILENAME_DEF};
 		if (fn.length()==0)
 			return new String[] {Prefs.FILENAME_DEF};
-		return fn.split(st.STR_CR);
+		return fn.split(st.STR_LF);
     }
     /** сохраняем массив имён файлов в настройки если EditText менялся */
 	public void saveFilename() {
@@ -415,11 +447,11 @@ public class MainActivity extends Activity
         	if (nm.isEmpty())
         		Prefs.setFilename(Prefs.FILENAME_DEF);
         	else{
-        		int ind = nm.indexOf(st.STR_CR);
+        		int ind = nm.indexOf(st.STR_LF);
         		// меняем \n на запятые
         		while (ind>-1) {
         			nm=nm.substring(0,ind)+st.STR_COMMA+nm.substring(ind+1);
-            		ind = nm.indexOf(st.STR_CR);
+            		ind = nm.indexOf(st.STR_LF);
         		}
         		Prefs.setFilename(nm);
         		et.setText(getFilenameString());
@@ -430,9 +462,16 @@ public class MainActivity extends Activity
 		}
 	}
 	public void savePrefs() {
-		if (cb_where!=null) {
+		if (cb_where!=null)
 			Prefs.setBoolean(Prefs.WHERE_RECORD, cb_where.isChecked());
+		if (cb_rec_separ!=null) 
+			Prefs.setBoolean(Prefs.RECORD_CB_SEPARATOR, cb_rec_separ.isChecked());
+		if (et_rec_separ!=null) {
+			Prefs.setString(Prefs.RECORD_LINE_SEPARATOR, et_rec_separ.getText().toString());
+			et_rec_separ.setText(Prefs.rec_et_separator);
 		}
+		
+		
 	}
     
 }

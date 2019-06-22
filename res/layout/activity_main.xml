@@ -9,16 +9,6 @@
     android:layout_marginRight="2dp"
     >
 
-<!-- <TextView -->
-<!--     android:id="@+id/main_vers" -->
-<!--     android:layout_width="wrap_content" -->
-<!--     android:layout_height="wrap_content" -->
-<!--     android:layout_alignParentBottom="false" -->
-<!--     android:gravity="left" -->
-<!--     android:text="ver" -->
-<!--     android:textColor="#00f"  -->
-<!--     /> -->
-
 <ScrollView
     android:id="@+id/main_scroll"
     android:layout_width="fill_parent"
@@ -26,7 +16,6 @@
     android:layout_alignParentTop="true"
     android:layout_alignParentBottom="true"
     >
-<!--     android:layout_below="@+id/main_vers"  -->
     
 <LinearLayout
     android:layout_width="match_parent"
@@ -73,17 +62,10 @@
 
 <EditText
     android:id="@+id/main_fname"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#f99"
-    android:gravity="left|top"
-    android:inputType="textMultiLine"
+    style="@style/textEdit"
     android:maxLines="5"
     android:minLines="5"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:textCursorDrawable="@null" >
-
+	>
     </EditText>
 
 <Button
@@ -102,6 +84,48 @@
     android:textSize="20sp" 
     android:text="@string/pref_where_append_record"
     />
+
+<TextView
+    android:id="@+id/set_record_info"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="5dp"
+    android:paddingTop="15dp"
+    android:paddingRight="5dp"
+    android:textSize="20sp" 
+    android:text="@string/set_record"
+    />
+
+<TextView
+    android:id="@+id/set_record_separator_info"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/set_record_line_separator"
+    />
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp" >
+
+<CheckBox
+    android:id="@+id/cb_record_separator"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:textSize="20sp" 
+    />
+
+<EditText
+    android:id="@+id/main__record_separator"
+    style="@style/textEdit"
+    android:layout_toRightOf ="@+id/cb_record_separator"
+    android:maxLines="1"
+    android:minLines="1"
+    >
+    </EditText>
+</RelativeLayout>
 
 <Button
     android:id="@+id/main_save"

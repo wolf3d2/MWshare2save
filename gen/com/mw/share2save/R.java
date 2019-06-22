@@ -25,18 +25,22 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_about=0x7f080009;
-        public static final int action_other_app=0x7f08000b;
-        public static final int action_rate=0x7f08000a;
+        public static final int action_about=0x7f08000d;
+        public static final int action_other_app=0x7f08000f;
+        public static final int action_rate=0x7f08000e;
+        public static final int cb_record_separator=0x7f08000a;
         public static final int cb_where_record=0x7f080007;
+        public static final int main__record_separator=0x7f08000b;
         public static final int main_desc=0x7f080001;
         public static final int main_fname=0x7f080005;
         public static final int main_fname_txt=0x7f080003;
         public static final int main_fname_txt_desc=0x7f080004;
         public static final int main_read_more=0x7f080002;
-        public static final int main_save=0x7f080008;
+        public static final int main_save=0x7f08000c;
         public static final int main_save_query=0x7f080006;
         public static final int main_scroll=0x7f080000;
+        public static final int set_record_info=0x7f080008;
+        public static final int set_record_separator_info=0x7f080009;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -49,14 +53,14 @@ public final class R {
         /**  О программе 
  О программе 
          */
-        public static final int about_author=0x7f05001f;
-        public static final int about_author_desc=0x7f050020;
+        public static final int about_author=0x7f050021;
+        public static final int about_author_desc=0x7f050022;
         /**      главное меню 
      главное меню 
          */
-        public static final int action_about=0x7f05001c;
-        public static final int action_other_app=0x7f05001e;
-        public static final int action_rate=0x7f05001d;
+        public static final int action_about=0x7f05001e;
+        public static final int action_other_app=0x7f050020;
+        public static final int action_rate=0x7f05001f;
         public static final int actions=0x7f05000c;
         public static final int add=0x7f050019;
         public static final int add_error=0x7f05001a;
@@ -92,6 +96,8 @@ public final class R {
      общее
          */
         public static final int search=0x7f050002;
+        public static final int set_record=0x7f05001c;
+        public static final int set_record_line_separator=0x7f05001d;
         public static final int version=0x7f050001;
         public static final int yes=0x7f050005;
     }
@@ -122,5 +128,6 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f060001;
+        public static final int textEdit=0x7f060002;
     }
 }

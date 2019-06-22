@@ -35,6 +35,9 @@
     <string name="add_error">Ошибка!\nНе получилось добавить!</string>
     <string name="pref_where_append_record">Если отмечено, то запись добавляется в начало файла, иначе в конец</string>
     
+    <string name="set_record">Параметры записи:</string>
+    <string name="set_record_line_separator">Строка-разделитель</string>
+    
 <!--     главное меню -->
     <string name="action_about">О программе</string>
     <string name="action_rate">Оценить приложение</string>

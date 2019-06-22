@@ -11,6 +11,12 @@ public class Prefs
 	SharedPreferences mPref;
 	/** куда добавлять запись, в начало файла, или конец */
 	public static boolean where_rec = false;
+
+	public static boolean rec_cb_separator = true;
+	public static String rec_et_separator = Set.STR_RAZDELITEL;
+
+	public static String RECORD_LINE_SEPARATOR = "record_line_separator";
+	public static String RECORD_CB_SEPARATOR = "record_check_separator";
 /** ключ, имя файла(ов) для добавления текста */
 	public static String FILENAME= "add_filename";
 	public static String FILENAME_DEF= "_MWshare2save.txt";
@@ -30,6 +36,11 @@ public class Prefs
 	{
 		removePreferences();
 		where_rec = Prefs.getBoolean(Prefs.WHERE_RECORD, false);
+		rec_cb_separator = Prefs.getBoolean(Prefs.RECORD_CB_SEPARATOR, true);
+		rec_et_separator = Prefs.getString(Prefs.RECORD_LINE_SEPARATOR, Set.STR_RAZDELITEL);
+		if (rec_cb_separator&&rec_et_separator.isEmpty()) {
+			Prefs.setString(Prefs.RECORD_LINE_SEPARATOR, Set.STR_RAZDELITEL);
+		}
 	}
 	// удаляем лишние (неиспользуемые) настройки
 	public static void removePreferences()
