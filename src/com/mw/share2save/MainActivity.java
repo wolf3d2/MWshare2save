@@ -9,6 +9,7 @@ import java.util.Date;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -212,8 +213,10 @@ public class MainActivity extends Activity
 		case R.id.action_about:
 			String text = inst.getString(R.string.app_name)+st.STR_LF;
 	        try{
-	            String ver = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-	            String app = getString(R.string.version)+" "+ver;
+	        	PackageManager pm = getPackageManager();
+	            String vname = pm.getPackageInfo(getPackageName(), 0).versionName;
+	            String vnum = " ("+pm.getPackageInfo(getPackageName(), 0).versionCode+")";
+	            String app = getString(R.string.version)+" "+vname+vnum;
 	            text+=app+st.STR_LF+st.STR_LF;
 	        }
 	        catch (Throwable e) {}
