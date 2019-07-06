@@ -36,6 +36,7 @@ public class MainActivity extends Activity
 	EditText et = null;
 	Button save = null;
 	CheckBox cb_where = null;
+	CheckBox cb_rec_date1 = null;
 	CheckBox cb_rec_separ = null;
 	EditText et_rec_separ = null;
 	boolean bchange = false;
@@ -124,13 +125,17 @@ public class MainActivity extends Activity
 		cb_where.setChecked(Prefs.where_rec);
 		cb_where.setOnClickListener(m_ClickListener);
 		
+		cb_rec_date1 = (CheckBox) inst.findViewById(R.id.cb_record_date1);
+		cb_rec_date1.setChecked(Prefs.rec_cb_date1);
+		cb_rec_date1.setOnClickListener(m_ClickListener);
+
 		cb_rec_separ = (CheckBox) inst.findViewById(R.id.cb_record_separator);
 		cb_rec_separ.setChecked(Prefs.rec_cb_separator);
 		cb_rec_separ.setOnClickListener(m_ClickListener);
 		
 		et_rec_separ = (EditText) inst.findViewById(R.id.main__record_separator);
 //		if (Prefs.rec_cb_separator&&Prefs.rec_et_separator.isEmpty()) {
-//			Prefs.setString(Prefs.RECORD_LINE_SEPARATOR, Set.STR_RAZDELITEL);
+//			Prefs.setString(Prefs.RECORD_LINE_SEPARATOR, st.STR_RAZDELITEL);
 //		}
 		et_rec_separ.setText(Prefs.rec_et_separator);
 
@@ -150,6 +155,7 @@ public class MainActivity extends Activity
             	saveFilename();
             	addSaveText(record);
             	return;
+            case R.id.cb_record_date1:
             case R.id.cb_record_separator:
             case R.id.cb_where_record:
             	savePrefs();
@@ -211,16 +217,17 @@ public class MainActivity extends Activity
 		switch (item.getItemId())
 		{
 		case R.id.action_about:
-			String text = inst.getString(R.string.app_name)+st.STR_LF;
+			String text = inst.getString(R.string.app_name)+st.STR_LF+st.STR_LF;
 	        try{
 	        	PackageManager pm = getPackageManager();
 	            String vname = pm.getPackageInfo(getPackageName(), 0).versionName;
 	            String vnum = " ("+pm.getPackageInfo(getPackageName(), 0).versionCode+")";
 	            String app = getString(R.string.version)+" "+vname+vnum;
-	            text+=app+st.STR_LF+st.STR_LF;
+	            text+=app+st.STR_LF;
 	        }
 	        catch (Throwable e) {}
-	        text+=inst.getString(R.string.about_author)+inst.getString(R.string.about_author_desc);
+	        text+=inst.getString(R.string.about_author)+st.STR_SPACE
+	        		+inst.getString(R.string.about_author_desc);
 			Dlg.helpDialog(inst, text);
 			return true;
 		case R.id.action_rate:
@@ -240,7 +247,7 @@ public class MainActivity extends Activity
 		case R.id.action_other_app:
 			try {
 		    	in= new Intent(Intent.ACTION_VIEW);
-		    	in.setData(Uri.parse(Set.ALL_APP_INMARKET));
+		    	in.setData(Uri.parse(st.ALL_APP_INMARKET));
 		    	inst.startActivity(in);
 				
 			} catch (Throwable e) {
@@ -355,21 +362,11 @@ public class MainActivity extends Activity
     	FileWriter wr;
     	try{
     		wr= new FileWriter(ff, true);
-    		String start = st.STR_NULL;
-    		String end= st.STR_LF;
-    		start=inst.getCurrentDate()+Set.STR_LF;
-    		if (Prefs.rec_cb_separator) {
-    			start+= Prefs.rec_et_separator+Set.STR_LF;
-    			end = Set.STR_LF+Prefs.rec_et_separator+Set.STR_LF+Set.STR_LF;
-    		}
-    		txt=start+txt+end; 
-//    		txt=inst.getCurrentDate()+Set.STR_LF+Prefs.rec_et_separator
-//    				+txt+Set.STR_LF+Prefs.rec_et_separator
-//    				+Set.STR_LF+Set.STR_LF;
-			 	wr.append(txt);
-			 	wr.flush();
-			 	wr.close();
-	        	record = null;
+    		txt = getRecordProcessing(txt);
+		 	wr.append(txt);
+		 	wr.flush();
+		 	wr.close();
+        	record = null;
         	st.toast(R.string.add);
         }  catch (IOException e) 
     	{
@@ -388,24 +385,11 @@ public class MainActivity extends Activity
         	st.toast(R.string.perm_not_all_perm);
         	return;
         }
-		String start = st.STR_NULL;
-		String end= st.STR_LF;
-		start=inst.getCurrentDate()+Set.STR_LF;
-		if (Prefs.rec_cb_separator) {
-			start+= Prefs.rec_et_separator+Set.STR_LF;
-			end = Set.STR_LF+Prefs.rec_et_separator+Set.STR_LF+Set.STR_LF;
-		}
-		txt=start+txt+end; 
-
-//		txt=inst.getCurrentDate()+Set.STR_LF+Prefs.rec_et_separator
-//		+Set.STR_LF+txt+Set.STR_LF+Prefs.rec_et_separator
-//		+Set.STR_LF+Set.STR_LF;
-    	
-    	//fn = Prefs.getFilename();
+		txt = getRecordProcessing(txt);
     	try {
 			MyRandomAccessFile eraf = new MyRandomAccessFile(
-					Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)+"/"+fn,
-					"rw");
+					Environment.getExternalStoragePublicDirectory(
+							Environment.DIRECTORY_DOWNLOADS)+"/"+fn, "rw");
 			eraf.insert(txt.getBytes(), 0);
 			eraf.close();
         	record = null;
@@ -415,23 +399,43 @@ public class MainActivity extends Activity
 		}
     	finish();
     }
-    public String getFilenameString()
+    /** подготавливаем запись к записи */
+    public String getRecordProcessing(String rec)
     {
-		String fn = Prefs.getFilename();
-		if (fn==null|fn.startsWith(Prefs.FILENAME_DEF))
-			return st.STR_NULL;
-		String ar[] = fn.split(st.STR_COMMA);
-		fn = st.STR_NULL;
-		for (int i=0;i<ar.length;i++) {
-			if (ar[i].isEmpty())
-				continue;
-			if (!ar[i].startsWith(st.STR_UNDERSCORING))
-				ar[i]=st.STR_UNDERSCORING+ar[i];
-			if (!ar[i].endsWith(Prefs.FILENAME_EXT_DEF))
-				ar[i]+=Prefs.FILENAME_EXT_DEF;
-			fn += ar[i]+st.STR_LF;
+		String start = st.STR_NULL;
+		String end= st.STR_LF;
+		// добавляем дату1
+		if (Prefs.rec_cb_date1)
+			start=inst.getCurrentDate()+st.STR_LF;
+		// добавляем разделитель
+		if (Prefs.rec_cb_separator) {
+			start+= Prefs.rec_et_separator+st.STR_LF;
+			end = st.STR_LF+Prefs.rec_et_separator+st.STR_LF+st.STR_LF;
 		}
+		rec=start+rec+end; 
+
+		String empty_str = st.STR_NULL;
 		
+		return rec;
+	}
+		
+	    public String getFilenameString()
+	    {
+			String fn = Prefs.getFilename();
+			if (fn==null|fn.startsWith(Prefs.FILENAME_DEF))
+				return st.STR_NULL;
+			String ar[] = fn.split(st.STR_COMMA);
+			fn = st.STR_NULL;
+			for (int i=0;i<ar.length;i++) {
+				if (ar[i].isEmpty())
+					continue;
+				if (!ar[i].startsWith(st.STR_UNDERSCORING))
+					ar[i]=st.STR_UNDERSCORING+ar[i];
+				if (!ar[i].endsWith(Prefs.FILENAME_EXT_DEF))
+					ar[i]+=Prefs.FILENAME_EXT_DEF;
+				fn += ar[i]+st.STR_LF;
+			}
+			
 		return fn;
     }
     public String[] getFilenameArray()
@@ -467,6 +471,8 @@ public class MainActivity extends Activity
 	public void savePrefs() {
 		if (cb_where!=null)
 			Prefs.setBoolean(Prefs.WHERE_RECORD, cb_where.isChecked());
+		if (cb_rec_date1!=null) 
+			Prefs.setBoolean(Prefs.RECORD_CB_DATE1, cb_rec_date1.isChecked());
 		if (cb_rec_separ!=null) 
 			Prefs.setBoolean(Prefs.RECORD_CB_SEPARATOR, cb_rec_separ.isChecked());
 		if (et_rec_separ!=null) {

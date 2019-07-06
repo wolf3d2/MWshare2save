@@ -12,9 +12,12 @@ public class Prefs
 	/** куда добавлять запись, в начало файла, или конец */
 	public static boolean where_rec = false;
 
+	public static boolean rec_cb_date1 = true;
 	public static boolean rec_cb_separator = true;
 	public static String rec_et_separator = Set.STR_RAZDELITEL;
 
+	/** добавлять дату в формате dd.MM.yyyy HH:mm:ss */
+	public static String RECORD_CB_DATE1= "record_check_date1";
 	public static String RECORD_LINE_SEPARATOR = "record_line_separator";
 	public static String RECORD_CB_SEPARATOR = "record_check_separator";
 /** ключ, имя файла(ов) для добавления текста */
@@ -36,6 +39,7 @@ public class Prefs
 	{
 		removePreferences();
 		where_rec = Prefs.getBoolean(Prefs.WHERE_RECORD, false);
+		rec_cb_date1 = Prefs.getBoolean(Prefs.RECORD_CB_DATE1, true);
 		rec_cb_separator = Prefs.getBoolean(Prefs.RECORD_CB_SEPARATOR, true);
 		rec_et_separator = Prefs.getString(Prefs.RECORD_LINE_SEPARATOR, Set.STR_RAZDELITEL);
 		if (rec_cb_separator&&rec_et_separator.isEmpty()) {

@@ -36,6 +36,7 @@
     <string name="pref_where_append_record">If checked, the entry will be added to the beginning of the file, otherwise to the end</string>
     
     <string name="set_record">Entry settings:</string>
+    <string name="set_record_date1">Add date and time</string>
     <string name="set_record_line_separator">Delimiter string</string>
     
 <!--     главное меню -->

@@ -36,6 +36,7 @@
     <string name="pref_where_append_record">Если отмечено, то запись добавляется в начало файла, иначе в конец</string>
     
     <string name="set_record">Параметры записи:</string>
+    <string name="set_record_date1">Добавлять дату и время</string>
     <string name="set_record_line_separator">Строка-разделитель</string>
     
 <!--     главное меню -->
