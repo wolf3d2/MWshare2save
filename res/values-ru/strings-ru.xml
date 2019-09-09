@@ -48,5 +48,9 @@
     <string name="about_author">Автор:</string>
     <string name="about_author_desc">Михаил Вязенкин</string>
     
+<!-- тема приложения -->
+    <string name="theme_title">Тема приложения:</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_dark">Тёмная</string>
     
 </resources>

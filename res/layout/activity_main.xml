@@ -65,7 +65,8 @@
     style="@style/textEdit"
     android:maxLines="5"
     android:minLines="5"
-	>
+    android:textColor="#000" >
+
     </EditText>
 
 <Button
@@ -129,13 +130,47 @@
 <EditText
     android:id="@+id/main__record_separator"
     style="@style/textEdit"
-    android:layout_toRightOf ="@+id/cb_record_separator"
+    android:layout_toRightOf="@+id/cb_record_separator"
     android:maxLines="1"
     android:minLines="1"
-    >
+    android:textColor="#000" >
+
     </EditText>
 
 </RelativeLayout>
+
+<TextView
+    android:id="@+id/tv_theme_app"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="5dp"
+    android:paddingTop="15dp"
+    android:paddingRight="5dp"
+    android:textSize="20sp" 
+    android:text="@string/theme_title"
+    />
+
+<RadioGroup
+    android:id="@+id/theme_radioGroup"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <RadioButton
+        android:id="@+id/radioButtonLight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="@string/theme_light" 
+        />
+
+    <RadioButton
+        android:id="@+id/radioButtonDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/theme_dark" 
+        />
+</RadioGroup>
 
 <Button
     android:id="@+id/main_save"

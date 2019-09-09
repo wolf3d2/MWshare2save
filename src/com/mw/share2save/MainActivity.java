@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -22,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class MainActivity extends Activity 
@@ -61,9 +63,12 @@ public class MainActivity extends Activity
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		// настройки читаются в App.java
+		inst = this;
+		setTheme(Prefs.app_theme);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		inst = this;
+//		inst = this;
         if (!Perm.checkPermission(inst)) {
         	Dlg.helpDialog(inst, inst.getString(R.string.perm_ann), new st.UniObserver() {
 				
@@ -75,13 +80,13 @@ public class MainActivity extends Activity
 				}
 			});
         }
-        try{
-            Prefs.init(this);
-            Prefs.readPreference();
-// пример записи нового параметра в настройки
-//    		Pref.get().edit().putString("parameter", "value").commit();
-        } catch (Throwable e) 
-        {}
+//        try{
+//            Prefs.init(this);
+//            Prefs.readPreference();
+//// пример записи нового параметра в настройки
+////    		Pref.get().edit().putString("parameter", "value").commit();
+//        } catch (Throwable e) 
+//        {}
         arFname = getFilenameArray();
         btn_rec = (Button) inst.findViewById(R.id.main_save_query);
         btn_rec.setOnClickListener(m_ClickListener);
@@ -139,6 +144,31 @@ public class MainActivity extends Activity
 //		}
 		et_rec_separ.setText(Prefs.rec_et_separator);
 
+        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.theme_radioGroup);
+        int th = R.id.radioButtonLight;
+        // если тема тёмная
+        if (Prefs.app_theme != R.style.AppTheme) {
+        	th = R.id.radioButtonDark;
+        	//et.setTextColor(Color.BLACK);
+        }
+        radioGroup.check(th);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.radioButtonLight:
+                    	Prefs.setBoolean(Prefs.THEME_APP, true);
+                    	Prefs.readPreference();
+                        break;
+                    case R.id.radioButtonDark:
+                    	Prefs.setBoolean(Prefs.THEME_APP, false);
+                        break;
+                }
+                inst.recreate();
+            }
+        });
+        
 	}
 	
     View.OnClickListener m_ClickListener = new View.OnClickListener()
@@ -362,7 +392,7 @@ public class MainActivity extends Activity
     	FileWriter wr;
     	try{
     		wr= new FileWriter(ff, true);
-    		txt = getRecordProcessing(txt);
+    		txt = getHeadRecordProcessing(txt);
 		 	wr.append(txt);
 		 	wr.flush();
 		 	wr.close();
@@ -385,7 +415,7 @@ public class MainActivity extends Activity
         	st.toast(R.string.perm_not_all_perm);
         	return;
         }
-		txt = getRecordProcessing(txt);
+		txt = getHeadRecordProcessing(txt);
     	try {
 			MyRandomAccessFile eraf = new MyRandomAccessFile(
 					Environment.getExternalStoragePublicDirectory(
@@ -400,7 +430,7 @@ public class MainActivity extends Activity
     	finish();
     }
     /** подготавливаем запись к записи */
-    public String getRecordProcessing(String rec)
+    public String getHeadRecordProcessing(String rec)
     {
 		String start = st.STR_NULL;
 		String end= st.STR_LF;

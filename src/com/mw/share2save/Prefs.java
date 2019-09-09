@@ -12,10 +12,12 @@ public class Prefs
 	/** куда добавлять запись, в начало файла, или конец */
 	public static boolean where_rec = false;
 
+	public static boolean cb_theme_app = true;
+	public static int app_theme = R.style.AppTheme;  //пример - android.R.style.Theme_Holo
 	public static boolean rec_cb_date1 = true;
 	public static boolean rec_cb_separator = true;
 	public static String rec_et_separator = Set.STR_RAZDELITEL;
-
+// константы
 	/** добавлять дату в формате dd.MM.yyyy HH:mm:ss */
 	public static String RECORD_CB_DATE1= "record_check_date1";
 	public static String RECORD_LINE_SEPARATOR = "record_line_separator";
@@ -26,6 +28,8 @@ public class Prefs
 	public static String FILENAME_EXT_DEF= ".txt";
 	/** ключ, куда добавлять запись - начало или конец файла */
 	public static String WHERE_RECORD = "where_record";
+
+	public static String THEME_APP = "theme_app";
 
 	public static void init(Context c)
 	{
@@ -38,6 +42,10 @@ public class Prefs
 	public static void readPreference()
 	{
 		removePreferences();
+		where_rec = Prefs.getBoolean(Prefs.THEME_APP, true); // по умолчание светлая тема
+		app_theme = R.style.AppTheme;
+		if (!where_rec)
+			app_theme = android.R.style.Theme_Holo;
 		where_rec = Prefs.getBoolean(Prefs.WHERE_RECORD, false);
 		rec_cb_date1 = Prefs.getBoolean(Prefs.RECORD_CB_DATE1, true);
 		rec_cb_separator = Prefs.getBoolean(Prefs.RECORD_CB_SEPARATOR, true);

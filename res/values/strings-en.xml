@@ -48,4 +48,9 @@
     <string name="about_author">Developer:</string>
     <string name="about_author_desc">Michail Wyazenkin</string>
     
+<!-- тема приложения -->
+    <string name="theme_title">Theme app:</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+
 </resources>

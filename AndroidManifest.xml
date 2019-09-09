@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mw.share2save"
     
-    android:versionCode="20"
-    android:versionName="1.01.01" >
+    android:versionCode="21"
+    android:versionName="1.01.02" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -16,6 +16,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" 
+		android:name="App"
         >
         >
 <!--        This meta-data tag is required to use Google Play Services. -->
