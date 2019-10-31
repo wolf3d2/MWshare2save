@@ -106,7 +106,14 @@ public class MainActivity extends Activity
 		more = (TextView) inst.findViewById(R.id.main_read_more);
 		more.setOnClickListener(m_ClickListener);
 		
+		et_rec_separ = (EditText) inst.findViewById(R.id.main__record_separator);
+		et_rec_separ.setText(Prefs.rec_et_separator);
+
 		et = (EditText) inst.findViewById(R.id.main_fname);
+		if (Prefs.app_theme != R.style.AppTheme) {
+			et.setBackgroundColor(Color.GRAY); 
+			et_rec_separ.setBackgroundColor(Color.GRAY); 
+		}
 		et.setText(getFilenameString());
 		et.addTextChangedListener(tw);
 //		et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -138,12 +145,6 @@ public class MainActivity extends Activity
 		cb_rec_separ.setChecked(Prefs.rec_cb_separator);
 		cb_rec_separ.setOnClickListener(m_ClickListener);
 		
-		et_rec_separ = (EditText) inst.findViewById(R.id.main__record_separator);
-//		if (Prefs.rec_cb_separator&&Prefs.rec_et_separator.isEmpty()) {
-//			Prefs.setString(Prefs.RECORD_LINE_SEPARATOR, st.STR_RAZDELITEL);
-//		}
-		et_rec_separ.setText(Prefs.rec_et_separator);
-
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.theme_radioGroup);
         int th = R.id.radioButtonLight;
         // если тема тёмная
