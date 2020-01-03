@@ -32,10 +32,14 @@ public class MainActivity extends Activity
 	String[] arFname = null;
 	public static MainActivity inst = null;
 //	TextView vers =null;
-	Button btn_rec = null;
 	TextView desc = null;
 	TextView more = null;
 	EditText et = null;
+	/** редактирование записи */
+	EditText et_rec = null;
+	TextView tv_rec = null;
+	Button btn_rec = null;
+
 	Button save = null;
 	CheckBox cb_where = null;
 	CheckBox cb_rec_date1 = null;
@@ -45,6 +49,7 @@ public class MainActivity extends Activity
 	// развернуть/свернуть описание
 	boolean bdescmore = false;
 	boolean changed = false;
+	boolean rec_changed = false;
 	TextWatcher tw = new TextWatcher() {
 		@Override
 		public void afterTextChanged(Editable s) {
@@ -58,6 +63,21 @@ public class MainActivity extends Activity
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before, int count) {
 			changed = true;
+		}
+	};
+	TextWatcher tw_edit_rec = new TextWatcher() {
+		@Override
+		public void afterTextChanged(Editable s) {
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			
+		}
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
+			rec_changed = true;
 		}
 	};
 
@@ -88,6 +108,22 @@ public class MainActivity extends Activity
 //        } catch (Throwable e) 
 //        {}
         arFname = getFilenameArray();
+        tv_rec = (TextView) inst.findViewById(R.id.main_tv_edit_rec);
+        tv_rec.setVisibility(View.GONE);
+
+        et_rec = (EditText) inst.findViewById(R.id.main_edit_rec);
+        et_rec.setVisibility(View.GONE);
+        et_rec.addTextChangedListener(tw_edit_rec);
+//        et_rec.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//			
+//			@Override
+//			public void onFocusChange(View v, boolean focus) {
+//				if (!focus) {
+//					record = ((EditText)v).getText().toString();
+//				}
+//			}
+//		});
+
         btn_rec = (Button) inst.findViewById(R.id.main_save_query);
         btn_rec.setOnClickListener(m_ClickListener);
         btn_rec.setVisibility(View.GONE);
@@ -112,6 +148,7 @@ public class MainActivity extends Activity
 		et = (EditText) inst.findViewById(R.id.main_fname);
 		if (Prefs.app_theme != R.style.AppTheme) {
 			et.setBackgroundColor(Color.GRAY); 
+			et_rec.setBackgroundColor(Color.GRAY); 
 			et_rec_separ.setBackgroundColor(Color.GRAY); 
 		}
 		et.setText(getFilenameString());
@@ -127,7 +164,7 @@ public class MainActivity extends Activity
 //			}
 //		});
     	changed = false;
-
+    	rec_changed = false;
 		//setFilenameToEditText(getFilenameString());
 		
 		save = (Button) inst.findViewById(R.id.main_save);
@@ -343,8 +380,16 @@ public class MainActivity extends Activity
     }
     public void addSaveTextDialog(final String addtext)
     {
-    	if (record!=null)
+    	if (rec_changed) {
+			record = et_rec.getText().toString();
+			rec_changed = false;
+    	}
+    	if (record!=null) {
+    		tv_rec.setVisibility(View.VISIBLE);
+    		et_rec.setText(record);
+    		et_rec.setVisibility(View.VISIBLE);
     		btn_rec.setVisibility(View.VISIBLE);
+    	}
         //arFname = getFilenameArray();
     	final String[] ars = new String[arFname.length+2];
     	ars[0] = inst.getString(R.string.cancel);
@@ -371,9 +416,9 @@ public class MainActivity extends Activity
                 	return 0;
                 else {
                 	if (Prefs.where_rec)
-                    	addSaveStartText(addtext,ars[pos]);
+                    	addSaveStartText(record,ars[pos]);
                 	else
-                		addSaveAppendText(addtext,ars[pos]);
+                		addSaveAppendText(record,ars[pos]);
                 }
                 	
 			return 0;
