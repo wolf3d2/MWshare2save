@@ -82,8 +82,6 @@
 <EditText
     android:id="@+id/main_edit_rec"
     style="@style/textEdit"
-    android:maxLines="5"
-    android:minLines="5"
     android:textColor="#000" >
     </EditText>
 

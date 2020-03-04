@@ -112,6 +112,8 @@ public class MainActivity extends Activity
         tv_rec.setVisibility(View.GONE);
 
         et_rec = (EditText) inst.findViewById(R.id.main_edit_rec);
+        et_rec.setMinLines(5);
+        et_rec.setMaxLines(15);
         et_rec.setVisibility(View.GONE);
         et_rec.addTextChangedListener(tw_edit_rec);
 //        et_rec.setOnFocusChangeListener(new View.OnFocusChangeListener() {
