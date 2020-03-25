@@ -26,7 +26,8 @@
 \n\nJust list file names in the input field below, and an entry will be added to one of them (without .txt , the program will add the extension itself); then send any selected text to the program via the Share button (Send in some programs), and it will be saved in the file you specified.
 \n\nIf the file name is not specified, the default entries will be saved in the _MWshare2save.txt file.
 \n\nThe underscore at the beginning of the file names is added specifically so that the files could be at the top of the list in the download folder.
-\n\nДля редактирования записи перед сохранением, файлов для сохранения должно быть указано не менее ДВУХ (в диалоге сохранения нажать \"В приложение\" и там появится поле редактирования записи. После окончания редактирования, нажать кнопку \"В диалог сохранения\")</string>
+\n\n(sorry - avtotranslated :) ):
+\n\nTo edit a record before saving, files for saving must be indicated by at least TWO - in the save dialog, click \ "To Application \" and there will appear a field for editing the record. After finishing editing, click the \ "To save dialog \" button.</string>
     <string name="read_more1">--- Expand Description ---</string>
     <string name="read_more2">--- Collapse ---</string>
 	<string name="filename">File names where to insert</string>

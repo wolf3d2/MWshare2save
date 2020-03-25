@@ -25,29 +25,31 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_about=0x7f080014;
-        public static final int action_other_app=0x7f080016;
-        public static final int action_rate=0x7f080015;
-        public static final int cb_record_date1=0x7f08000b;
-        public static final int cb_record_separator=0x7f08000d;
-        public static final int cb_where_record=0x7f080009;
-        public static final int main__record_separator=0x7f08000e;
+        public static final int action_about=0x7f080016;
+        public static final int action_other_app=0x7f080018;
+        public static final int action_rate=0x7f080017;
+        public static final int cb_record_date1=0x7f08000d;
+        public static final int cb_record_separator=0x7f08000f;
+        public static final int cb_where_record=0x7f08000b;
+        public static final int main__record_separator=0x7f080010;
         public static final int main_desc=0x7f080001;
-        public static final int main_edit_rec=0x7f080007;
+        public static final int main_edit_rec=0x7f080008;
         public static final int main_fname=0x7f080005;
         public static final int main_fname_txt=0x7f080003;
         public static final int main_fname_txt_desc=0x7f080004;
+        public static final int main_line1=0x7f080006;
+        public static final int main_line2=0x7f08000a;
         public static final int main_read_more=0x7f080002;
-        public static final int main_save=0x7f080013;
-        public static final int main_save_query=0x7f080008;
+        public static final int main_save=0x7f080015;
+        public static final int main_save_query=0x7f080009;
         public static final int main_scroll=0x7f080000;
-        public static final int main_tv_edit_rec=0x7f080006;
-        public static final int radioButtonDark=0x7f080012;
-        public static final int radioButtonLight=0x7f080011;
-        public static final int set_record_info=0x7f08000a;
-        public static final int set_record_separator_info=0x7f08000c;
-        public static final int theme_radioGroup=0x7f080010;
-        public static final int tv_theme_app=0x7f08000f;
+        public static final int main_tv_edit_rec=0x7f080007;
+        public static final int radioButtonDark=0x7f080014;
+        public static final int radioButtonLight=0x7f080013;
+        public static final int set_record_info=0x7f08000c;
+        public static final int set_record_separator_info=0x7f08000e;
+        public static final int theme_radioGroup=0x7f080012;
+        public static final int tv_theme_app=0x7f080011;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;

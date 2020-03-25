@@ -108,7 +108,14 @@ public class MainActivity extends Activity
 //        } catch (Throwable e) 
 //        {}
         arFname = getFilenameArray();
-        tv_rec = (TextView) inst.findViewById(R.id.main_tv_edit_rec);
+        
+        // прячем горизонтальные линии
+        tv_rec = (TextView)inst.findViewById(R.id.main_line1);
+        tv_rec.setVisibility(View.GONE);
+		tv_rec = (TextView)inst.findViewById(R.id.main_line2);
+		tv_rec.setVisibility(View.GONE);
+        
+		tv_rec = (TextView) inst.findViewById(R.id.main_tv_edit_rec);
         tv_rec.setVisibility(View.GONE);
 
         et_rec = (EditText) inst.findViewById(R.id.main_edit_rec);
@@ -387,7 +394,11 @@ public class MainActivity extends Activity
 			rec_changed = false;
     	}
     	if (record!=null) {
+    		TextView tv = (TextView)inst.findViewById(R.id.main_line1);
+    		tv.setVisibility(View.VISIBLE);
     		tv_rec.setVisibility(View.VISIBLE);
+    		tv = (TextView)inst.findViewById(R.id.main_line2);
+    		tv.setVisibility(View.VISIBLE);
     		et_rec.setText(record);
     		et_rec.setVisibility(View.VISIBLE);
     		btn_rec.setVisibility(View.VISIBLE);
