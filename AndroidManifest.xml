@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mw.share2save"
     
-    android:versionCode="25"
-    android:versionName="1.01.06" >
+    android:versionCode="26"
+    android:versionName="1.01.07" >
 
     <uses-sdk
         android:minSdkVersion="16"

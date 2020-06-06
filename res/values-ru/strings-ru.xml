@@ -33,6 +33,7 @@
     <string name="filename_desc">Каждое имя файла должно быть с новой строки</string>
     <string name="save_query">В диалог сохранения записи</string>
     <string name="edit_rec">Редактирование записи:</string>
+    <string name="max_line_edit_rec">Макс. строк:</string>
     <string name="save">Сохранить</string>
     <string name="saved">Сохранено</string>
     <string name="add">Добавлено</string>

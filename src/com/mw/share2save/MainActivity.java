@@ -23,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -37,6 +38,9 @@ public class MainActivity extends Activity
 	EditText et = null;
 	/** редактирование записи */
 	EditText et_rec = null;
+	/** строк в редактировании записи */
+	EditText et_rec_max = null;
+	LinearLayout llmax_line = null;
 	TextView tv_rec = null;
 	Button btn_rec = null;
 
@@ -119,19 +123,41 @@ public class MainActivity extends Activity
         tv_rec.setVisibility(View.GONE);
 
         et_rec = (EditText) inst.findViewById(R.id.main_edit_rec);
-        et_rec.setMinLines(5);
-        et_rec.setMaxLines(15);
+        et_rec.setLines(Prefs.max_edit_line);
         et_rec.setVisibility(View.GONE);
         et_rec.addTextChangedListener(tw_edit_rec);
-//        et_rec.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//			
-//			@Override
-//			public void onFocusChange(View v, boolean focus) {
-//				if (!focus) {
-//					record = ((EditText)v).getText().toString();
-//				}
-//			}
-//		});
+
+        et_rec_max = (EditText) inst.findViewById(R.id.et_max_line_edit_rec);
+        et_rec_max.setLines(1);
+        et_rec_max.setText(st.STR_NULL+Prefs.max_edit_line);
+        et_rec_max.addTextChangedListener(new TextWatcher() {
+    		@Override
+    		public void afterTextChanged(Editable s) {
+    		}
+
+    		@Override
+    		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    			
+    		}
+
+    		@Override
+    		public void onTextChanged(CharSequence s, int start, int before, int count) {
+    			try {
+    				String ss = st.STR_NULL+s;
+					int li = Integer.parseInt(ss);
+					if (li > 0) {
+						et_rec.setLines(li);
+						Prefs.setInt(Prefs.MAX_EDIT_LINE, li);
+						Prefs.max_edit_line = li;
+					}
+				} catch (Throwable e) {
+				}
+    			
+    		}
+    	});
+
+        llmax_line = (LinearLayout) inst.findViewById(R.id.ll_max_line_edit_rec);
+        llmax_line.setVisibility(View.GONE);
 
         btn_rec = (Button) inst.findViewById(R.id.main_save_query);
         btn_rec.setOnClickListener(m_ClickListener);
@@ -158,7 +184,8 @@ public class MainActivity extends Activity
 		if (Prefs.app_theme != R.style.AppTheme) {
 			et.setBackgroundColor(Color.GRAY); 
 			et_rec.setBackgroundColor(Color.GRAY); 
-			et_rec_separ.setBackgroundColor(Color.GRAY); 
+			et_rec_max.setBackgroundColor(Color.GRAY); 
+			et_rec_separ.setBackgroundColor(Color.GRAY);
 		}
 		et.setText(getFilenameString());
 		et.addTextChangedListener(tw);
@@ -276,6 +303,7 @@ public class MainActivity extends Activity
 			});
 		} else
 			super.onBackPressed();
+		st.hideKbd(inst);
 	}
 	
 	@Override
@@ -378,16 +406,16 @@ public class MainActivity extends Activity
         	if (arFname.length < 2)
         		addSaveStartText(txt, arFname[0]);
         	else
-        		addSaveTextDialog(txt);
+        		dialogAddSaveText(txt);
     	} else {
         	if (arFname.length < 2)
         		addSaveAppendText(txt, arFname[0]);
         	else
-        		addSaveTextDialog(txt);
+        		dialogAddSaveText(txt);
     	}
     	
     }
-    public void addSaveTextDialog(final String addtext)
+    public void dialogAddSaveText(final String addtext)
     {
     	if (rec_changed) {
 			record = et_rec.getText().toString();
@@ -401,6 +429,7 @@ public class MainActivity extends Activity
     		tv.setVisibility(View.VISIBLE);
     		et_rec.setText(record);
     		et_rec.setVisibility(View.VISIBLE);
+    		llmax_line.setVisibility(View.VISIBLE);
     		btn_rec.setVisibility(View.VISIBLE);
     	}
         //arFname = getFilenameArray();

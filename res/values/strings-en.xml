@@ -34,6 +34,7 @@
 	<string name="filename_desc">Each file name should start on a new line</string>
     <string name="save_query">В диалог сохранения записи</string>
     <string name="edit_rec">Edit record:</string>
+    <string name="max_line_edit_rec">Max lines:</string>
     <string name="save">Save</string>
     <string name="saved">Saved</string>
     <string name="add_sel">Add selected text</string>

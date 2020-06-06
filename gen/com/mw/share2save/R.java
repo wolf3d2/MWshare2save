@@ -25,31 +25,34 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_about=0x7f080016;
-        public static final int action_other_app=0x7f080018;
-        public static final int action_rate=0x7f080017;
-        public static final int cb_record_date1=0x7f08000d;
-        public static final int cb_record_separator=0x7f08000f;
-        public static final int cb_where_record=0x7f08000b;
-        public static final int main__record_separator=0x7f080010;
+        public static final int action_about=0x7f080019;
+        public static final int action_other_app=0x7f08001b;
+        public static final int action_rate=0x7f08001a;
+        public static final int cb_record_date1=0x7f080010;
+        public static final int cb_record_separator=0x7f080012;
+        public static final int cb_where_record=0x7f08000e;
+        public static final int et_max_line_edit_rec=0x7f08000a;
+        public static final int ll_max_line_edit_rec=0x7f080008;
+        public static final int main__record_separator=0x7f080013;
         public static final int main_desc=0x7f080001;
-        public static final int main_edit_rec=0x7f080008;
+        public static final int main_edit_rec=0x7f08000b;
         public static final int main_fname=0x7f080005;
         public static final int main_fname_txt=0x7f080003;
         public static final int main_fname_txt_desc=0x7f080004;
         public static final int main_line1=0x7f080006;
-        public static final int main_line2=0x7f08000a;
+        public static final int main_line2=0x7f08000d;
         public static final int main_read_more=0x7f080002;
-        public static final int main_save=0x7f080015;
-        public static final int main_save_query=0x7f080009;
+        public static final int main_save=0x7f080018;
+        public static final int main_save_query=0x7f08000c;
         public static final int main_scroll=0x7f080000;
         public static final int main_tv_edit_rec=0x7f080007;
-        public static final int radioButtonDark=0x7f080014;
-        public static final int radioButtonLight=0x7f080013;
-        public static final int set_record_info=0x7f08000c;
-        public static final int set_record_separator_info=0x7f08000e;
-        public static final int theme_radioGroup=0x7f080012;
-        public static final int tv_theme_app=0x7f080011;
+        public static final int radioButtonDark=0x7f080017;
+        public static final int radioButtonLight=0x7f080016;
+        public static final int set_record_info=0x7f08000f;
+        public static final int set_record_separator_info=0x7f080011;
+        public static final int theme_radioGroup=0x7f080015;
+        public static final int tv_max_line_edit_rec=0x7f080009;
+        public static final int tv_theme_app=0x7f080014;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -62,18 +65,18 @@ public final class R {
         /**  О программе 
  О программе 
          */
-        public static final int about_author=0x7f050023;
-        public static final int about_author_desc=0x7f050024;
+        public static final int about_author=0x7f050024;
+        public static final int about_author_desc=0x7f050025;
         /**      главное меню 
      главное меню 
          */
-        public static final int action_about=0x7f050020;
-        public static final int action_other_app=0x7f050022;
-        public static final int action_rate=0x7f050021;
+        public static final int action_about=0x7f050021;
+        public static final int action_other_app=0x7f050023;
+        public static final int action_rate=0x7f050022;
         public static final int actions=0x7f05000c;
-        public static final int add=0x7f05001a;
-        public static final int add_error=0x7f05001b;
-        public static final int add_sel=0x7f050019;
+        public static final int add=0x7f05001b;
+        public static final int add_error=0x7f05001c;
+        public static final int add_sel=0x7f05001a;
         public static final int app_name=0x7f050000;
         public static final int cancel=0x7f050004;
         public static final int create=0x7f050008;
@@ -88,6 +91,7 @@ public final class R {
         public static final int filename=0x7f050013;
         public static final int filename_desc=0x7f050014;
         public static final int in_app=0x7f05000d;
+        public static final int max_line_edit_rec=0x7f050017;
         public static final int no=0x7f050006;
         public static final int not_work=0x7f05000a;
         public static final int ok=0x7f050003;
@@ -96,25 +100,25 @@ public final class R {
  title for permission
          */
         public static final int perm_not_all_perm=0x7f05000e;
-        public static final int pref_where_append_record=0x7f05001c;
+        public static final int pref_where_append_record=0x7f05001d;
         public static final int read_more1=0x7f050011;
         public static final int read_more2=0x7f050012;
-        public static final int save=0x7f050017;
+        public static final int save=0x7f050018;
         public static final int save_query=0x7f050015;
-        public static final int saved=0x7f050018;
+        public static final int saved=0x7f050019;
         /**      общее
      общее
          */
         public static final int search=0x7f050002;
-        public static final int set_record=0x7f05001d;
-        public static final int set_record_date1=0x7f05001e;
-        public static final int set_record_line_separator=0x7f05001f;
-        public static final int theme_dark=0x7f050027;
-        public static final int theme_light=0x7f050026;
+        public static final int set_record=0x7f05001e;
+        public static final int set_record_date1=0x7f05001f;
+        public static final int set_record_line_separator=0x7f050020;
+        public static final int theme_dark=0x7f050028;
+        public static final int theme_light=0x7f050027;
         /**  тема приложения 
  тема приложения 
          */
-        public static final int theme_title=0x7f050025;
+        public static final int theme_title=0x7f050026;
         public static final int version=0x7f050001;
         public static final int yes=0x7f050005;
     }
